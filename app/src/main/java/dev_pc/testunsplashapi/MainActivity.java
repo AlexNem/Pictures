@@ -8,11 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import dev_pc.testunsplashapi.api.UnsplashModel;
 import dev_pc.testunsplashapi.image_recycler.ImageFragment;
 import dev_pc.testunsplashapi.image_recycler.MyImageRecyclerViewAdapter;
@@ -29,70 +29,89 @@ public class MainActivity extends AppCompatActivity implements ImageFragment.OnL
     List<UnsplashModel> lists;
     RecyclerView recyclerView;
     String code;
+    Button btn_Authorize, btn_Token;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        btn_Authorize = findViewById(R.id.btn_A);
+        btn_Token = findViewById(R.id.btn_T);
+        authorizeCode();
+        getToken();
 
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://unsplash.com/oauth/authorize"
-                + "?client_id=" + ConstantApi.APPLICATION_ID
-                + "&redirect_uri=" + ConstantApi.REDIRECT_URI
-                + "&response_type=code"
-                + "&scope=public+read_user"));
-        startActivity(intent);
-//        getToken();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        Log.d("TAGSS", "!!!");
+        Log.d("TAG", "onResume");
         Uri uri = getIntent().getData();
         if (uri != null && uri.toString().startsWith(ConstantApi.REDIRECT_URI)) {
 
             code = uri.getQueryParameter("code");
-            Log.d("TAGSS", "" + code);
+            Log.d("TAG", "" + code);
 
-        }else  Log.d("TAGS", " pusto" );
+        }else  Log.d("TAG", "uri = null" );
+    }
+    public void authorizeCode(){
+        btn_Authorize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://unsplash.com/oauth/authorize"
+                        + "?client_id=" + ConstantApi.APPLICATION_ID
+                        + "&redirect_uri=" + ConstantApi.REDIRECT_URI
+                        + "&response_type=code"
+                        + "&scope=public+read_user"));
+                startActivity(intent);
 
-
+            }
+        });
     }
 
     private void getToken(){
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("https://unsplash.com/")
-                .addConverterFactory(GsonConverterFactory.create());
-        Retrofit retrofit = builder.build();
+    btn_Token.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl("https://unsplash.com/")
+                    .addConverterFactory(GsonConverterFactory.create());
+            Retrofit retrofit = builder.build();
 
-        UserAuthorizationApi client = retrofit.create(UserAuthorizationApi.class);
-        Call<AccessToken> accessTokenCall = client.getAccesToken(
-                ConstantApi.APPLICATION_ID,
-                ConstantApi.SECRET,
-                ConstantApi.REDIRECT_URI,
-                code,
-                "authorization_code"
+            UserAuthorizationApi client = retrofit.create(UserAuthorizationApi.class);
+            Call<AccessToken> accessTokenCall = client.getAccesToken(
+                    ConstantApi.APPLICATION_ID,
+                    ConstantApi.SECRET,
+                    ConstantApi.REDIRECT_URI,
+                    code,
+                    "authorization_code"
 
-        );
-        accessTokenCall.enqueue(new Callback<AccessToken>() {
-            @Override
-            public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
-                Toast.makeText(MainActivity.this, "YES" , Toast.LENGTH_LONG).show();
-                Log.d("TAG", "kuku " + response.body().getAccessToken());
-            }
+            );
+            accessTokenCall.enqueue(new Callback<AccessToken>() {
+                @Override
+                public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
+                    Toast.makeText(MainActivity.this, "YES" , Toast.LENGTH_LONG).show();
+                    if (response.body() != null){
 
-            @Override
-            public void onFailure(Call<AccessToken> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "no", Toast.LENGTH_LONG).show();
-            }
-        });
+                        Log.d("TAG", "kuku " + response.body().getAccessToken());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AccessToken> call, Throwable t) {
+                    Toast.makeText(MainActivity.this, "no", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    });
+
     }
     private void getPublic(){
         lists = new ArrayList<>();
         unsplashModel = new UnsplashModel();
 
-        recyclerView = (RecyclerView) findViewById(R.id.reclist);
+        recyclerView = findViewById(R.id.reclist);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         MyImageRecyclerViewAdapter adapter = new MyImageRecyclerViewAdapter(lists,this);
