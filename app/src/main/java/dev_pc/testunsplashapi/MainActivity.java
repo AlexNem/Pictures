@@ -1,117 +1,81 @@
 package dev_pc.testunsplashapi;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.hannesdorfmann.mosby3.mvp.MvpActivity;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import dev_pc.testunsplashapi.api.UnsplashModel;
 import dev_pc.testunsplashapi.image_recycler.ImageFragment;
 import dev_pc.testunsplashapi.image_recycler.MyImageRecyclerViewAdapter;
+import dev_pc.testunsplashapi.interfaces.IPresenter;
+import dev_pc.testunsplashapi.interfaces.IView;
+import dev_pc.testunsplashapi.presenters.UnsplashPresenter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class MainActivity extends AppCompatActivity implements ImageFragment.OnListFragmentInteractionListener {
+public class MainActivity extends MvpActivity<IView, IPresenter> implements
+        IView,
+        ImageFragment.OnListFragmentInteractionListener
+{
 
     UnsplashModel unsplashModel;
     List<UnsplashModel> lists;
     RecyclerView recyclerView;
-    String code;
-    Button btn_Authorize, btn_Token;
+    Button btn_token,btn_public;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        btn_Authorize = findViewById(R.id.btn_A);
-        btn_Token = findViewById(R.id.btn_T);
-        authorizeCode();
-        getToken();
+        btn_token = findViewById(R.id.btn_token);
+        btn_public = findViewById(R.id.btn_public);
 
+       pressAuthorize();
+       btnPublic();
+
+    }
+
+    void btnPublic(){
+        btn_public.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPublic();
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        Log.d("TAG", "onResume");
-        Uri uri = getIntent().getData();
-        if (uri != null && uri.toString().startsWith(ConstantApi.REDIRECT_URI)) {
-
-            code = uri.getQueryParameter("code");
-            Log.d("TAG", "" + code);
-
-        }else  Log.d("TAG", "uri = null" );
-    }
-    public void authorizeCode(){
-        btn_Authorize.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://unsplash.com/oauth/authorize"
-                        + "?client_id=" + ConstantApi.APPLICATION_ID
-                        + "&redirect_uri=" + ConstantApi.REDIRECT_URI
-                        + "&response_type=code"
-                        + "&scope=public+read_user"));
-                startActivity(intent);
-
-            }
-        });
-    }
-
-    private void getToken(){
-    btn_Token.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Retrofit.Builder builder = new Retrofit.Builder()
-                    .baseUrl("https://unsplash.com/")
-                    .addConverterFactory(GsonConverterFactory.create());
-            Retrofit retrofit = builder.build();
-
-            UserAuthorizationApi client = retrofit.create(UserAuthorizationApi.class);
-            Call<AccessToken> accessTokenCall = client.getAccesToken(
-                    ConstantApi.APPLICATION_ID,
-                    ConstantApi.SECRET,
-                    ConstantApi.REDIRECT_URI,
-                    code,
-                    "authorization_code"
-
-            );
-            accessTokenCall.enqueue(new Callback<AccessToken>() {
-                @Override
-                public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
-                    Toast.makeText(MainActivity.this, "YES" , Toast.LENGTH_LONG).show();
-                    if (response.body() != null){
-
-                        Log.d("TAG", "kuku " + response.body().getAccessToken());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<AccessToken> call, Throwable t) {
-                    Toast.makeText(MainActivity.this, "no", Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-    });
+        Log.d("TAG", "StartOnResume");
+        getPresenter().getCode(getIntent().getData());
 
     }
+
+    @NonNull
+    @Override
+    public IPresenter createPresenter() {
+        return new UnsplashPresenter(getApplicationContext());
+    }
+
     private void getPublic(){
         lists = new ArrayList<>();
         unsplashModel = new UnsplashModel();
 
-        recyclerView = findViewById(R.id.reclist);
+        recyclerView = (RecyclerView) findViewById(R.id.reclist);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         MyImageRecyclerViewAdapter adapter = new MyImageRecyclerViewAdapter(lists,this);
@@ -133,10 +97,20 @@ public class MainActivity extends AppCompatActivity implements ImageFragment.OnL
                         Log.d("TAG", t.getMessage());
                     }
                 });
-
     }
     @Override
     public void onListFragmentInteraction(UnsplashModel item) {
-      Toast.makeText(this, "asd", Toast.LENGTH_LONG).show();
+      Toast.makeText(this, "you touch item of recyclerView?", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void pressAuthorize() {
+        btn_token.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPresenter().getUri();
+            }
+        });
+
     }
 }

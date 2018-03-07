@@ -10,18 +10,18 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="dev_pc.testunsplashapi.MainActivity">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_token"
+        android:text="token"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_A"
-        android:text="Authorize" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_T"
-        android:text="Token" />
-    <include layout="@layout/fragment_image_list"/>
+        android:id="@+id/btn_public"
+        android:text="public"/>
+ <include layout="@layout/fragment_image_list"/>
 
 
 </LinearLayout>

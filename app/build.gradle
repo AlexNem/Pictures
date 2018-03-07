@@ -30,4 +30,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.picasso:picasso:2.3.0'
+    implementation 'com.hannesdorfmann.mosby3:mvi:3.0.4'
+    implementation 'com.hannesdorfmann.mosby3:mvp:3.0.4'
+    implementation 'com.hannesdorfmann.mosby3:viewstate:3.0.4'
 }
