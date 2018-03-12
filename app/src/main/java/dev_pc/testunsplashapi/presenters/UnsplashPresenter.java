@@ -10,6 +10,7 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import dev_pc.testunsplashapi.AccessToken;
 import dev_pc.testunsplashapi.ConstantApi;
+import dev_pc.testunsplashapi.MainActivity;
 import dev_pc.testunsplashapi.UserAuthorizationApi;
 import dev_pc.testunsplashapi.interfaces.IPresenter;
 import dev_pc.testunsplashapi.interfaces.IView;
@@ -38,6 +39,7 @@ implements IPresenter {
                     + "&response_type=code"
                     + "&scope=public+read_user"));
             context.startActivity(intent);
+
         }
     }
 

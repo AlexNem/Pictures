@@ -1,5 +1,6 @@
 package dev_pc.testunsplashapi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,15 +27,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends MvpActivity<IView, IPresenter> implements
-        IView,
-        ImageFragment.OnListFragmentInteractionListener
+public class MainActivity extends MvpActivity<IView, IPresenter>
+        implements IView
 {
-
-    UnsplashModel unsplashModel;
-    List<UnsplashModel> lists;
-    RecyclerView recyclerView;
     Button btn_token,btn_public;
+    Intent intent;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +40,8 @@ public class MainActivity extends MvpActivity<IView, IPresenter> implements
 
         btn_token = findViewById(R.id.btn_token);
         btn_public = findViewById(R.id.btn_public);
+
+        intent = new Intent(this, PublicAccess.class);
 
        pressAuthorize();
        btnPublic();
@@ -52,7 +52,7 @@ public class MainActivity extends MvpActivity<IView, IPresenter> implements
         btn_public.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPublic();
+              startActivity(intent);
             }
         });
     }
@@ -68,39 +68,7 @@ public class MainActivity extends MvpActivity<IView, IPresenter> implements
     @NonNull
     @Override
     public IPresenter createPresenter() {
-        return new UnsplashPresenter(getApplicationContext());
-    }
-
-    private void getPublic(){
-        lists = new ArrayList<>();
-        unsplashModel = new UnsplashModel();
-
-        recyclerView = (RecyclerView) findViewById(R.id.reclist);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        MyImageRecyclerViewAdapter adapter = new MyImageRecyclerViewAdapter(lists,this);
-        recyclerView.setAdapter(adapter);
-        PublicAccessAPI publicAccessAPI = new PublicAccessAPI();
-        publicAccessAPI.buildRetrofit().getPhotos("0309ebb085124bab57ce37c0cb6b9ea1b4f9a3c90208a5739b07f625fe63c87b")
-                .enqueue(new Callback<List<UnsplashModel>>() {
-                    @Override
-                    public void onResponse(Call<List<UnsplashModel>> call, Response<List<UnsplashModel>> response) {
-                        if (response.isSuccessful()){
-                            Log.d("TAG", Integer.toString(response.body().size()));
-                            lists.addAll(response.body());
-                            recyclerView.getAdapter().notifyDataSetChanged();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<UnsplashModel>> call, Throwable t) {
-                        Log.d("TAG", t.getMessage());
-                    }
-                });
-    }
-    @Override
-    public void onListFragmentInteraction(UnsplashModel item) {
-      Toast.makeText(this, "you touch item of recyclerView?", Toast.LENGTH_LONG).show();
+        return new UnsplashPresenter(this);
     }
 
     @Override

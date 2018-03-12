@@ -39,7 +39,8 @@ public class MyImageRecyclerViewAdapter extends RecyclerView.Adapter<MyImageRecy
         holder.mItem = mValues.get(position);
         context = holder.mImageView.getContext();
         Picasso.with(context)
-                .load(holder.mItem.getUrls().getSmall())
+                .load(holder.mItem.getUrls().getRegular())
+                .placeholder(R.drawable.ic_photo_size_select_actual_black_24dp)
                 .into(holder.mImageView);
 
 //        holder.mIdView.setText(mValues.get(position).getId());
