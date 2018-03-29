@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import dev_pc.testunsplashapi.R;
-import dev_pc.testunsplashapi.api.UnsplashModel;
+import dev_pc.testunsplashapi.responseModel.UnsplashModel;
 
 /**
  * A fragment representing a lists of Items.

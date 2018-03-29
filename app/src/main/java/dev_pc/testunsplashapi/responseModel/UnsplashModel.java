@@ -1,12 +1,10 @@
 
-package dev_pc.testunsplashapi.api;
+package dev_pc.testunsplashapi.responseModel;
 
 import java.util.List;
-import java.util.Objects;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.squareup.picasso.Picasso;
 
 public class UnsplashModel   {
 

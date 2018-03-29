@@ -1,19 +1,22 @@
-package dev_pc.testunsplashapi;
+package dev_pc.testunsplashapi.api;
 
 import java.util.List;
 
-import dev_pc.testunsplashapi.api.UnsplashModel;
+import dev_pc.testunsplashapi.responseModel.AccessToken;
+import dev_pc.testunsplashapi.responseModel.UnsplashModel;
+import dev_pc.testunsplashapi.responseModel.User;
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 
 
 public interface UserAuthorizationApi {
+
 
     @POST("oauth/token")
     @FormUrlEncoded
@@ -27,4 +30,10 @@ public interface UserAuthorizationApi {
 
     @GET("photos/")
     Call<List<UnsplashModel>> getPhotos(@Query("client_id") String client_id);
+
+
+
+
+    @GET("me")
+    Call<User> getUserProfile();
 }

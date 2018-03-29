@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import dev_pc.testunsplashapi.R;
-import dev_pc.testunsplashapi.api.UnsplashModel;
+import dev_pc.testunsplashapi.responseModel.UnsplashModel;
 
 public class MyImageRecyclerViewAdapter extends RecyclerView.Adapter<MyImageRecyclerViewAdapter.ViewHolder> {
 

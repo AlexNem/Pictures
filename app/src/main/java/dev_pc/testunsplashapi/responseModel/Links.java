@@ -1,5 +1,5 @@
 
-package dev_pc.testunsplashapi.api;
+package dev_pc.testunsplashapi.responseModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,4 +1,4 @@
-package dev_pc.testunsplashapi;
+package dev_pc.testunsplashapi.responseModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,6 +8,9 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class AccessToken {
+
+
+
 
     @SerializedName("access_token")
     @Expose
@@ -31,7 +34,7 @@ public class AccessToken {
     }
 
     public String getTokenType() {
-        return tokenType;
+        return  tokenType;
     }
 
     public void setTokenType(String tokenType) {
