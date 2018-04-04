@@ -3,14 +3,8 @@ package dev_pc.testunsplashapi.responseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Dev-pc on 16.02.2018.
- */
 
 public class AccessToken {
-
-
-
 
     @SerializedName("access_token")
     @Expose
@@ -24,6 +18,13 @@ public class AccessToken {
     @SerializedName("created_at")
     @Expose
     private long createdAt;
+
+    public AccessToken(String accessToken, String tokenType, String scope, long createdAt) {
+        this.accessToken = accessToken;
+        this.tokenType = tokenType;
+        this.scope = scope;
+        this.createdAt = createdAt;
+    }
 
     public String getAccessToken() {
         return accessToken;

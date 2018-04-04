@@ -5,7 +5,6 @@ import java.util.List;
 import dev_pc.testunsplashapi.responseModel.AccessToken;
 import dev_pc.testunsplashapi.responseModel.UnsplashModel;
 import dev_pc.testunsplashapi.responseModel.User;
-import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -16,6 +15,8 @@ import retrofit2.http.Query;
 
 
 public interface UserAuthorizationApi {
+
+
 
 
     @POST("oauth/token")
@@ -34,6 +35,9 @@ public interface UserAuthorizationApi {
 
 
 
+
     @GET("me")
-    Call<User> getUserProfile();
+    Call<User> getUserProfile(
+//            @Header("authorization:" + "bearer") String token
+    );
 }

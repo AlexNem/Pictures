@@ -1,7 +1,9 @@
 package dev_pc.testunsplashapi.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +28,7 @@ public class PublicAccess extends AppCompatActivity implements ImageFragment.OnL
     UnsplashModel unsplashModel;
     List<UnsplashModel> lists;
     RecyclerView recyclerView;
+    MainActivity mainActivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class PublicAccess extends AppCompatActivity implements ImageFragment.OnL
         lists = new ArrayList<>();
         unsplashModel = new UnsplashModel();
 
-        recyclerView = (RecyclerView) findViewById(R.id.reclist);
+        recyclerView = findViewById(R.id.reclist);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         MyImageRecyclerViewAdapter adapter = new MyImageRecyclerViewAdapter(lists,this);
@@ -52,6 +55,7 @@ public class PublicAccess extends AppCompatActivity implements ImageFragment.OnL
                             Log.d("TAG", Integer.toString(response.body().size()));
                             lists.addAll(response.body());
                             recyclerView.getAdapter().notifyDataSetChanged();
+
                         }
                     }
 
@@ -66,4 +70,18 @@ public class PublicAccess extends AppCompatActivity implements ImageFragment.OnL
         Toast.makeText(this, "you touch item of recyclerView?", Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Повернутись?")
+                .setMessage("Подумай добре? :)")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                        PublicAccess.super.onBackPressed();
+                    }
+                }).create().show();
+
+    }
 }
