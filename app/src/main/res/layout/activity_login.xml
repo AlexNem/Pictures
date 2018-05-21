@@ -13,33 +13,34 @@
 
     <Button
         android:id="@+id/btn_token"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="token" />
 
     <Button
         android:id="@+id/btn_public"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="public" />
     <Button
         android:id="@+id/btn_user"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="user" />
     <Button
         android:id="@+id/btn_show"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="show" />
     <Button
         android:id="@+id/btn_newFoto"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="curated"/>
+    <Button
+        android:id="@+id/btn_start_activity"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="start"/>
 
 </LinearLayout>

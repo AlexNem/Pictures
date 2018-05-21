@@ -21,8 +21,8 @@ public class LoginActivity extends MvpActivity<IView, UnsplashPresenter>
         implements IView
 {
     Button btn_show;
-    Button btn_token,btn_public,btn_user,btn_newfoto;
-    Intent publicIntent,newFotoIntent;
+    Button btn_token,btn_public,btn_user,btn_newfoto, btn_start;
+    Intent publicIntent,newFotoIntent, startActivity;
 
     MySharedPreferences sharedPreferences;
     String tokenSP;
@@ -38,9 +38,11 @@ public class LoginActivity extends MvpActivity<IView, UnsplashPresenter>
         btn_public = findViewById(R.id.btn_public);
         btn_user = findViewById(R.id.btn_user);
         btn_newfoto = findViewById(R.id.btn_newFoto);
+        btn_start = findViewById(R.id.btn_start_activity);
 
         publicIntent = new Intent(this, PublicAccess.class);
         newFotoIntent = new Intent(this, NewPhoto.class);
+        startActivity = new Intent(this, StartActivity.class);
         sharedPreferences = new MySharedPreferences(getApplicationContext());
         tokenSP = sharedPreferences.getMyAccessToken().getAccessToken();
 
@@ -49,6 +51,7 @@ public class LoginActivity extends MvpActivity<IView, UnsplashPresenter>
        btnUser();
        showSP();
        showNewFoto();
+       showStartActivity();
     }
 
     void showNewFoto(){
@@ -56,6 +59,14 @@ public class LoginActivity extends MvpActivity<IView, UnsplashPresenter>
             @Override
             public void onClick(View v) {
                 startActivity(newFotoIntent);
+            }
+        });
+    }
+    void showStartActivity(){
+        btn_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(startActivity);
             }
         });
     }
