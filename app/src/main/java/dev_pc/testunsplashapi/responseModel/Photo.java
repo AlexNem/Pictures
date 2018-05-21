@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UnsplashModel   {
+public class Photo {
 
     @SerializedName("id")
     @Expose
@@ -52,7 +52,7 @@ public class UnsplashModel   {
     private User user;
     @SerializedName("current_user_collections")
     @Expose
-    private List<UnsplashModel> currentUserCollections = null;
+    private List<Photo> currentUserCollections = null;
 
     public String getId() {
         return id;
@@ -166,11 +166,11 @@ public class UnsplashModel   {
         this.user = user;
     }
 
-    public List<UnsplashModel> getCurrentUserCollections() {
+    public List<Photo> getCurrentUserCollections() {
         return currentUserCollections;
     }
 
-    public void setCurrentUserCollections(List<UnsplashModel> currentUserCollections) {
+    public void setCurrentUserCollections(List<Photo> currentUserCollections) {
         this.currentUserCollections = currentUserCollections;
     }
 

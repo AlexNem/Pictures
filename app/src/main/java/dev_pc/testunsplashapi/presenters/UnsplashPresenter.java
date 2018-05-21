@@ -2,9 +2,7 @@ package dev_pc.testunsplashapi.presenters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,12 +16,12 @@ import dev_pc.testunsplashapi.interfaces.IView;
 import dev_pc.testunsplashapi.responseModel.AccessToken;
 import dev_pc.testunsplashapi.responseModel.User;
 import dev_pc.testunsplashapi.util.ConstantApi;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -31,10 +29,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UnsplashPresenter extends MvpBasePresenter<IView> {
 
-
-    private Long created;
-    private String token, type, scope;
-    private AccessToken accessToken;
     private OkHttpClient myOkHttpClient;
     private MySharedPreferences mySharedPreferences;
     private Context context;
@@ -45,41 +39,25 @@ public class UnsplashPresenter extends MvpBasePresenter<IView> {
         mySharedPreferences = new MySharedPreferences(context);
     }
 
-    public void getCurrentUser(){
-        httpClient(mySharedPreferences);
+    public void getCurrentUser() {
+        tokenClient(mySharedPreferences);
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://unsplash.com/")
+                .baseUrl("https://api.unsplash.com/")
+                .client(myOkHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(myOkHttpClient)
                 .build();
         UserAuthorizationApi client = retrofit.create(UserAuthorizationApi.class);
-
-        final Call<User> getUser = client.getUserProfile();
-        getUser.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()){
-                    Toast.makeText(context, "Yes! ",Toast.LENGTH_LONG).show();
-                    Log.d("TAG","response = " + response.body());
-                }
-                else {
-                    Toast.makeText(context, "user ",Toast.LENGTH_LONG).show();
-
-                    Log.d("TAG", "Current body" + response.body());
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-
-                Toast.makeText(context, "Looser!!!", Toast.LENGTH_LONG).show();
-            }
-        });
+        Observable<User> getUser = client.getUserProfile();
+        getUser
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(user -> {
+                            Log.d("TAG", "user" + user.getUsername());
+                    Toast.makeText(context, " " + user.getUsername(), Toast.LENGTH_LONG).show();
+                        }
+                );
     }
-
-
 
     public void getUri() {
         if (isViewAttached()) {
@@ -95,47 +73,25 @@ public class UnsplashPresenter extends MvpBasePresenter<IView> {
 
 
     public void getToken(final String code) {
-
-            Retrofit.Builder builder = new Retrofit.Builder()
-                    .baseUrl("https://unsplash.com/")
-                    .addConverterFactory(GsonConverterFactory.create());
-            Retrofit retrofit = builder.build();
-
-            UserAuthorizationApi client = retrofit.create(UserAuthorizationApi.class);
-
-            Call<AccessToken> accessTokenCall = client.getAccesToken(
-                    ConstantApi.APPLICATION_ID,
-                    ConstantApi.SECRET,
-                    ConstantApi.REDIRECT_URI,
-                    code,
-                    "authorization_code"
-            );
-            accessTokenCall.enqueue(new Callback<AccessToken>() {
-                @Override
-                public void onResponse(@NonNull Call<AccessToken>  call, @NonNull Response<AccessToken> response) {
-                    try {
-                        Toast.makeText(context, "token " + response.body().getAccessToken() , Toast.LENGTH_SHORT).show();
-                        token = response.body().getAccessToken();
-                        type = response.body().getTokenType();
-                        scope = response.body().getScope();
-                        created = response.body().getCreatedAt();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.d("TAG", " " + e);
-                    }
-
-                    accessToken = new AccessToken(token, type, scope, created);
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("https://unsplash.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+        Retrofit retrofit = builder.build();
+        UserAuthorizationApi client = retrofit.create(UserAuthorizationApi.class);
+        Observable<AccessToken> call = client.getAccesToken(
+                ConstantApi.APPLICATION_ID,
+                ConstantApi.SECRET,
+                ConstantApi.REDIRECT_URI,
+                code,
+                "authorization_code");
+        call
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(accessToken -> {
                     mySharedPreferences.addToken(accessToken);
-                    httpClient(mySharedPreferences);
-                    Log.d("TAG", "" + myOkHttpClient);
-
-                }
-
-                @Override
-                public void onFailure(Call<AccessToken> call, Throwable t) {
-                    Toast.makeText(context, "no", Toast.LENGTH_LONG).show();
-                }
-            });
+                    Toast.makeText(context, "" + accessToken.getAccessToken(), Toast.LENGTH_LONG).show();
+                });
     }
 
     public void getCode(Uri uri) {
@@ -147,19 +103,18 @@ public class UnsplashPresenter extends MvpBasePresenter<IView> {
         }
     }
 
-    private OkHttpClient httpClient(final MySharedPreferences mySharedPreferences){
+    private void tokenClient(final MySharedPreferences mySharedPreferences){
         OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder();
         okHttpBuilder.addInterceptor(new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
                 Request.Builder builder = request.newBuilder()
-                        .header("Authorization:", mySharedPreferences.getMyAccessToken().getAccessToken());
+                        .header("Authorization", "Bearer " + mySharedPreferences.getMyAccessToken().getAccessToken());
                 Request newRequest = builder.build();
                 return chain.proceed(newRequest);
             }
         });
-       return myOkHttpClient = okHttpBuilder.build();
-
+        myOkHttpClient = okHttpBuilder.build();
     }
 }

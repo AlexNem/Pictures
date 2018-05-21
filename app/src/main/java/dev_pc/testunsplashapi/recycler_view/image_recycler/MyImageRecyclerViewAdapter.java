@@ -1,4 +1,4 @@
-package dev_pc.testunsplashapi.image_recycler;
+package dev_pc.testunsplashapi.recycler_view.image_recycler;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,15 +12,15 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import dev_pc.testunsplashapi.R;
-import dev_pc.testunsplashapi.responseModel.UnsplashModel;
+import dev_pc.testunsplashapi.responseModel.Photo;
 
 public class MyImageRecyclerViewAdapter extends RecyclerView.Adapter<MyImageRecyclerViewAdapter.ViewHolder> {
 
-    private final List<UnsplashModel> mValues;
+    private final List<Photo> mValues;
     private final ImageFragment.OnListFragmentInteractionListener mListener;
     Context context;
 
-    public MyImageRecyclerViewAdapter(List<UnsplashModel> items, ImageFragment.OnListFragmentInteractionListener listener) {
+    public MyImageRecyclerViewAdapter(List<Photo> items, ImageFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
 
@@ -30,7 +30,6 @@ public class MyImageRecyclerViewAdapter extends RecyclerView.Adapter<MyImageRecy
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_image, parent, false);
-
         return new ViewHolder(view);
     }
 
@@ -42,9 +41,6 @@ public class MyImageRecyclerViewAdapter extends RecyclerView.Adapter<MyImageRecy
                 .load(holder.mItem.getUrls().getRegular())
                 .placeholder(R.drawable.ic_photo_size_select_actual_black_24dp)
                 .into(holder.mImageView);
-
-//        holder.mIdView.setText(mValues.get(position).getId());
-//        holder.mContentView.setText(mValues.get(position).getColor());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,13 +61,12 @@ public class MyImageRecyclerViewAdapter extends RecyclerView.Adapter<MyImageRecy
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final ImageView mImageView;
-        public UnsplashModel mItem;
+        public Photo mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mImageView = view.findViewById(R.id.image);
-
 
         }
     }

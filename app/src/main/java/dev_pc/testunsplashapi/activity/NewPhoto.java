@@ -30,7 +30,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class PublicAccess extends AppCompatActivity implements ImageFragment.OnListFragmentInteractionListener{
+public class NewPhoto extends AppCompatActivity implements ImageFragment.OnListFragmentInteractionListener{
 
     Photo unsplashModel;
     List<Photo> lists;
@@ -41,16 +41,16 @@ public class PublicAccess extends AppCompatActivity implements ImageFragment.OnL
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pubic_image_layout);
+        setContentView(R.layout.new_foto_activity);
         publicClient();
-        getPublic();
+        getNewPhoto();
     }
 
-    private void getPublic(){
+    private void getNewPhoto(){
         lists = new ArrayList<>();
         unsplashModel = new Photo();
 
-        recyclerView = findViewById(R.id.reclist);
+        recyclerView = findViewById(R.id.new_photo_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         MyImageRecyclerViewAdapter adapter = new MyImageRecyclerViewAdapter(lists,this);
@@ -64,14 +64,14 @@ public class PublicAccess extends AppCompatActivity implements ImageFragment.OnL
         Retrofit retrofit = builder.build();
         UserAuthorizationApi client = retrofit.create(UserAuthorizationApi.class);
 
-        Observable<List<Photo>> getPublic = client.getPublicPhotos();
-        getPublic
+        Observable<List<Photo>> getNewPhoto = client.getNewPhoto();
+        getNewPhoto
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list ->{
-                    Log.d("TAG", "list" + list.size());
-                    lists.addAll(list);
-                   recyclerView.getAdapter().notifyDataSetChanged();
+                            Log.d("TAG", "list" + list.size());
+                            lists.addAll(list);
+                            recyclerView.getAdapter().notifyDataSetChanged();
                         }
                 );
     }
@@ -88,7 +88,7 @@ public class PublicAccess extends AppCompatActivity implements ImageFragment.OnL
                 return chain.proceed(newRequest);
             }
         });
-         myOkHttpClient = builder.build();
+        myOkHttpClient = builder.build();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class PublicAccess extends AppCompatActivity implements ImageFragment.OnL
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
 
-                        PublicAccess.super.onBackPressed();
+                        NewPhoto.super.onBackPressed();
                     }
                 }).create().show();
     }
