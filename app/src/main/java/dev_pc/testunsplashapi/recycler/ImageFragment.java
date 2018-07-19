@@ -1,8 +1,8 @@
-package dev_pc.testunsplashapi.recycler_view.new_foto_recycler;
+package dev_pc.testunsplashapi.recycler;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,29 +13,19 @@ import android.view.ViewGroup;
 import dev_pc.testunsplashapi.R;
 import dev_pc.testunsplashapi.responseModel.Photo;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-public class NewfotoFragment extends Fragment {
+public class ImageFragment extends Fragment {
 
     private Photo photo;
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
-    public NewfotoFragment() {
+    public ImageFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static NewfotoFragment newInstance(int columnCount) {
-        NewfotoFragment fragment = new NewfotoFragment();
+    public static ImageFragment newInstance(int columnCount) {
+        ImageFragment fragment = new ImageFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -56,7 +46,7 @@ public class NewfotoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.newfoto_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_image_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -67,11 +57,10 @@ public class NewfotoFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new NewfotoRecycler(photo.getCurrentUserCollections(), mListener));
+            recyclerView.setAdapter(new ImageRecycler(photo.getCurrentUserCollections(), mListener));
         }
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -90,16 +79,6 @@ public class NewfotoFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Photo item);

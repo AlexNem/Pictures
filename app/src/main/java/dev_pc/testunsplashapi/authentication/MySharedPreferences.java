@@ -2,8 +2,6 @@ package dev_pc.testunsplashapi.authentication;
 
 import dev_pc.testunsplashapi.presenters.UnsplashPresenter;
 import dev_pc.testunsplashapi.responseModel.AccessToken;
-import dev_pc.testunsplashapi.util.ConstantApi;
-import retrofit2.Response;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -21,6 +19,7 @@ public class MySharedPreferences {
     String CREATED_AT = "created_at";
 
     public MySharedPreferences(Context context){
+        this.context = context;
         sharedPreferences = context.getSharedPreferences("Token", Context.MODE_PRIVATE);
 
     }

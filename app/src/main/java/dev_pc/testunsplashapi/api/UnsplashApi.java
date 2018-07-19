@@ -2,6 +2,8 @@ package dev_pc.testunsplashapi.api;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import dev_pc.testunsplashapi.responseModel.AccessToken;
 import dev_pc.testunsplashapi.responseModel.Photo;
 import dev_pc.testunsplashapi.responseModel.User;
@@ -13,7 +15,7 @@ import retrofit2.http.POST;
 
 
 
-public interface UserAuthorizationApi {
+public interface UnsplashApi {
 
     @POST("oauth/token")
     @FormUrlEncoded

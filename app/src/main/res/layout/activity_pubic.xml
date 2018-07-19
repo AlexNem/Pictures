@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <include layout="@layout/newfoto_list_fragment" />
+    <include layout="@layout/fragment_image_list" />
 
 </LinearLayout>

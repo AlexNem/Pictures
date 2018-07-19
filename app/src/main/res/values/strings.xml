@@ -14,4 +14,15 @@
         completions."
     </string>
     <string name="search_title">Search</string>
+    <string name="about_title">About</string>
+    <string name="theme_title">Theme</string>
+    <string name="category_title">Category</string>
+    <string name="collection_title">Collection</string>
+    <string name="home_title">Home</string>
+
+    <string name="view_navigation_close">Close</string>
+    <string name="view_navigation_open">Open</string>
+
+    <string name="new_tab_name">New</string>
+    <string name="curated_tab_name">Curated</string>
 </resources>

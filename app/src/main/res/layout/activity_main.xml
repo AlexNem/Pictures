@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/login_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="dev_pc.testunsplashapi.activity.LoginActivity">
+    tools:context="dev_pc.testunsplashapi.activity.MainActivity">
 
     <Button
         android:id="@+id/btn_token"
@@ -33,14 +33,15 @@
         android:layout_height="wrap_content"
         android:text="show" />
     <Button
-        android:id="@+id/btn_newFoto"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="curated"/>
-    <Button
         android:id="@+id/btn_start_activity"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="start"/>
+    <Button
+        android:id="@+id/btn_photo_fragment"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="fragment"
+        android:visibility="invisible"/>
 
 </LinearLayout>

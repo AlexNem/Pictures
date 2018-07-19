@@ -1,4 +1,4 @@
-package dev_pc.testunsplashapi.recycler_view.image_recycler;
+package dev_pc.testunsplashapi.recycler;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -14,13 +14,13 @@ import java.util.List;
 import dev_pc.testunsplashapi.R;
 import dev_pc.testunsplashapi.responseModel.Photo;
 
-public class MyImageRecyclerViewAdapter extends RecyclerView.Adapter<MyImageRecyclerViewAdapter.ViewHolder> {
+public class ImageRecycler extends RecyclerView.Adapter<ImageRecycler.ViewHolder> {
 
     private final List<Photo> mValues;
     private final ImageFragment.OnListFragmentInteractionListener mListener;
     Context context;
 
-    public MyImageRecyclerViewAdapter(List<Photo> items, ImageFragment.OnListFragmentInteractionListener listener) {
+    public ImageRecycler(List<Photo> items, ImageFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
 
