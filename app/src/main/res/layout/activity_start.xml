@@ -5,49 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="dev_pc.testunsplashapi.activity.StartActivity"
+    tools:context="dev_pc.testunsplashapi.activity.start_activity.StartActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/start_coordinator"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            app:titleTextColor="@color/colorAccent">
-        </android.support.v7.widget.Toolbar>
-        
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@android:color/white"
-            app:tabIndicatorHeight="6dp"
-            app:tabSelectedTextColor="@android:color/white"
-            app:tabBackground="@color/colorPrimaryDark">
 
-        </android.support.design.widget.TabLayout>
-
-    </android.support.design.widget.AppBarLayout>
-
-
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" >-->
 
-        </android.support.v4.view.ViewPager>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                app:titleTextColor="@color/colorAccent">
+            </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.CoordinatorLayout>
+        </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation"

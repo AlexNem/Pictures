@@ -5,42 +5,34 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import dev_pc.testunsplashapi.Fragment.AbstractTabFragment;
-import dev_pc.testunsplashapi.Fragment.CuratedFragment;
-import dev_pc.testunsplashapi.Fragment.NewPhotoFragment;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TabsAdapter extends FragmentPagerAdapter {
 
-    private Map<Integer, AbstractTabFragment> tabs;
     private Context context;
+    private List<Fragment> fragmentList = new ArrayList<>();
+    private List<String> titleList = new ArrayList<>();
 
     public TabsAdapter(Context context, FragmentManager fm) {
         super(fm);
         this.context = context;
-        initTabsMap(context);
+
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabs.get(position).getTitle();
+        return titleList.get(position);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return tabs.get(position);
+        return fragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return tabs.size();
+        return fragmentList.size();
     }
 
-    private void initTabsMap(Context context) {
-        tabs = new HashMap<>();
-        tabs.put(0, NewPhotoFragment.getInstance(context));
-        tabs.put(1, CuratedFragment.getInstance(context));
-    }
 }

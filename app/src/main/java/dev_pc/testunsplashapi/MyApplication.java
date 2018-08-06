@@ -2,18 +2,18 @@ package dev_pc.testunsplashapi;
 
 import android.app.Application;
 
-import dev_pc.testunsplashapi.dagger.ApplicationModule;
-import dev_pc.testunsplashapi.dagger.DaggerUnsplashComponent;
-import dev_pc.testunsplashapi.dagger.UnsplashComponent;
-import dev_pc.testunsplashapi.dagger.UnsplashModule;
+import dev_pc.testunsplashapi.dagger2.ApiMudule;
+import dev_pc.testunsplashapi.dagger2.AppComponent;
+import dev_pc.testunsplashapi.dagger2.AppModule;
+import dev_pc.testunsplashapi.dagger2.DaggerAppComponent;
 
 public class MyApplication extends Application {
 
-    private static UnsplashComponent component;
+    public static AppComponent component;
 
-    public static UnsplashComponent getComponent() {
+    public static AppComponent getComponent(){
         return component;
-    }
+}
 
     @Override
     public void onCreate() {
@@ -21,10 +21,11 @@ public class MyApplication extends Application {
         component = buildComponent();
     }
 
-    protected UnsplashComponent buildComponent(){
-        return DaggerUnsplashComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .unsplashModule(new UnsplashModule())
+    protected AppComponent buildComponent(){
+        return DaggerAppComponent.builder()
+                .apiMudule(new ApiMudule())
+                .appModule(new AppModule())
                 .build();
     }
 }
+
