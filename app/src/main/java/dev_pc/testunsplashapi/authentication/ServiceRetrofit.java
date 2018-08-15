@@ -1,6 +1,10 @@
 package dev_pc.testunsplashapi.authentication;
 
-import dev_pc.testunsplashapi.service.ApiUnsplash;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.net.Uri;
+
+import dev_pc.testunsplashapi.model.Photo;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

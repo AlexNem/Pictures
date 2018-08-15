@@ -1,6 +1,6 @@
 package dev_pc.testunsplashapi.authentication;
 
-import dev_pc.testunsplashapi.activity.start_activity.StartPresenter;
+import dev_pc.testunsplashapi.activity.login_activity.LoginPresenter;
 import dev_pc.testunsplashapi.model.AccessToken;
 
 import android.content.Context;
@@ -10,7 +10,7 @@ public class MySharedPreferences {
 
     private Context context;
     private AccessToken accessToken;
-    private StartPresenter startPresenter;
+    private LoginPresenter loginPresenter;
     private SharedPreferences sharedPreferences;
 
     String ACCESS_TOKEN = "access_token";

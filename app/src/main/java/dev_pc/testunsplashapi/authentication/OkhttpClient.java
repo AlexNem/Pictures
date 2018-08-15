@@ -12,7 +12,6 @@ public class OkhttpClient {
 
     private Context context;
     private MySharedPreferences sharedPreferences;
-    public static OkHttpClient client;
 
     public OkhttpClient(Context context) {
         this.context = context;

@@ -3,7 +3,6 @@ package dev_pc.testunsplashapi.recycler_view.image_recycler;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,16 +11,17 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import dev_pc.testunsplashapi.Fragment.IListFragment;
 import dev_pc.testunsplashapi.R;
 import dev_pc.testunsplashapi.model.Photo;
 
-public class MyImageRecyclerViewAdapter extends RecyclerView.Adapter<MyImageRecyclerViewAdapter.ViewHolder> {
+public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecyclerViewAdapter.ViewHolder> {
 
     private final List<Photo> mValues;
-    private final ImageFragment.OnListFragmentInteractionListener mListener;
+    private final IListFragment.Presenter mListener;
     Context context;
 
-    public MyImageRecyclerViewAdapter(List<Photo> items, ImageFragment.OnListFragmentInteractionListener listener) {
+    public ImageRecyclerViewAdapter(List<Photo> items, IListFragment.Presenter listener) {
         mValues = items;
         mListener = listener;
 
@@ -29,21 +29,21 @@ public class MyImageRecyclerViewAdapter extends RecyclerView.Adapter<MyImageRecy
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        android.view.View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_image, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
+        holder.mPhoto = mValues.get(position);
         context = holder.mImageView.getContext();
         Picasso.with(context)
-                .load(holder.mItem.getUrls().getRegular())
+                .load(holder.mPhoto.getUrls().getRegular())
                 .placeholder(R.drawable.ic_photo_size_select_actual_black_24dp)
                 .into(holder.mImageView);
-        holder.mLikeCount.setText(holder.mItem.getLikes());
-        if (holder.mItem.isLikedByUser()){
+        holder.mLikeCount.setText(holder.mPhoto.getLikes());
+        if (holder.mPhoto.isLikedByUser()){
             Picasso.with(context)
                     .load(R.drawable.ic_favorite_red_24dp)
                     .placeholder(R.drawable.ic_favorite_red_24dp)
@@ -52,31 +52,34 @@ public class MyImageRecyclerViewAdapter extends RecyclerView.Adapter<MyImageRecy
                 .load(R.drawable.ic_favorite_black_24dp)
                 .placeholder(R.drawable.ic_faworite_empty)
                 .into(holder.mLike);
+        holder.mLike.setOnClickListener(v -> mListener.onLike(holder.mPhoto));
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
+//        holder.mView.setOnClickListener(new android.view.View.OnClickListener() {
+//            @Override
+//            public void onClick(android.view.View v) {
+//                if (null != mListener) {
+//                    // Notify the active callbacks interface (the activity, if the
+//                    // fragment is attached to one) that an item has been selected.
+//                    mListener.onListFragmentInteraction(holder.mPhoto);
+//                }
+//            }
+//        });
+
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount(){
+        if (mValues == null) return 0;
         return mValues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
+        public final android.view.View mView;
         public final ImageView mImageView, mLike, mDownload, mCollections;
         public final TextView mLikeCount;
-        public Photo mItem;
+        public Photo mPhoto;
 
-        public ViewHolder(View view) {
+        public ViewHolder(android.view.View view) {
             super(view);
             mView = view;
             mImageView = view.findViewById(R.id.image);

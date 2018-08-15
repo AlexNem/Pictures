@@ -12,18 +12,19 @@ import android.widget.Toast;
 import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 
 import dev_pc.testunsplashapi.R;
-import dev_pc.testunsplashapi.activity.PublicAccess;
+//import dev_pc.testunsplashapi.activity.PublicAccess;
 import dev_pc.testunsplashapi.activity.start_activity.StartActivity;
-import dev_pc.testunsplashapi.activity.start_activity.StartPresenter;
+import dev_pc.testunsplashapi.activity.user_activity.UserActivity;
 import dev_pc.testunsplashapi.authentication.MySharedPreferences;
 
 
-public class LoginActivity extends MvpActivity<IView, StartPresenter>
+public class LoginActivity extends MvpActivity<IView, LoginPresenter>
         implements IView
 {
     Button btn_show;
-    Button btn_token,btn_public,btn_user,btn_newfoto, btn_start;
-    Intent publicIntent,newFotoIntent, startActivity;
+    Button btn_token,btn_user, btn_start, btn_profile;
+    Intent startActivity;
+    Intent userActivity;
 
     MySharedPreferences sharedPreferences;
     String tokenSP;
@@ -36,20 +37,25 @@ public class LoginActivity extends MvpActivity<IView, StartPresenter>
 
         btn_show = findViewById(R.id.btn_show);
         btn_token = findViewById(R.id.btn_token);
-        btn_public = findViewById(R.id.btn_public);
         btn_user = findViewById(R.id.btn_user);
         btn_start = findViewById(R.id.btn_start_activity);
+        btn_profile = findViewById(R.id.btn_profile);
 
-        publicIntent = new Intent(this, PublicAccess.class);
         startActivity = new Intent(this, StartActivity.class);
+        userActivity = new Intent(this, UserActivity.class);
+
         sharedPreferences = new MySharedPreferences(getApplicationContext());
         tokenSP = sharedPreferences.getMyAccessToken().getAccessToken();
 
        pressAuthorize();
-       btnPublic();
        btnUser();
        showSP();
        showStartActivity();
+       showProfile();
+    }
+
+    void showProfile(){
+        btn_profile.setOnClickListener(listener -> startActivity(userActivity));
     }
 
     void showStartActivity(){
@@ -82,15 +88,6 @@ public class LoginActivity extends MvpActivity<IView, StartPresenter>
             }
         });
     }
-
-    void btnPublic(){
-        btn_public.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              startActivity(publicIntent);
-            }
-        });
-    }
     
     @Override
     protected void onResume() {
@@ -102,8 +99,8 @@ public class LoginActivity extends MvpActivity<IView, StartPresenter>
 
     @NonNull
     @Override
-    public StartPresenter createPresenter() {
-        return new StartPresenter(this);
+    public LoginPresenter createPresenter() {
+        return new LoginPresenter(this);
     }
 
     @Override

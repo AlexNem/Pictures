@@ -1,25 +1,25 @@
 package dev_pc.testunsplashapi.Fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import dev_pc.testunsplashapi.R;
+import java.util.ArrayList;
 
-public class CuratedFragment extends AbstractTabFragment {
+import dev_pc.testunsplashapi.R;
+import dev_pc.testunsplashapi.recycler_view.image_recycler.ImageRecyclerViewAdapter;
+
+public class CuratedFragment extends BaseFragment {
+
 
     private final int LAYOUT = R.layout.fragment_curated;
 
-    public static NewPhotoFragment getInstance(Context context){
-        Bundle args = new Bundle();
-        NewPhotoFragment fragment = new NewPhotoFragment();
-        fragment.setArguments(args);
-        fragment.setContext(context);
-        fragment.setTitle(context.getString(R.string.curated_tab_name));
-        return fragment;
+    @Override
+    public BaseFragmentPresenter createPresenter() {
+        return new BaseFragmentPresenter();
     }
 
     @Nullable
@@ -29,4 +29,12 @@ public class CuratedFragment extends AbstractTabFragment {
         return view;
     }
 
+    @Override
+    public void initRecycler(IListFragment.View View, int recID) {
+        lists = new ArrayList<>();
+        recyclerView = view.findViewById(recID);
+        imageRecyclerViewAdapter = new ImageRecyclerViewAdapter(lists, listener);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+    }
 }

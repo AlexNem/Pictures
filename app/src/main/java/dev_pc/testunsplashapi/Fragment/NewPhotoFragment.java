@@ -1,7 +1,7 @@
 package dev_pc.testunsplashapi.Fragment;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,14 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.hannesdorfmann.mosby3.mvp.MvpView;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import dev_pc.testunsplashapi.R;
 import dev_pc.testunsplashapi.service.ApiUnsplash;
-import dev_pc.testunsplashapi.recycler_view.image_recycler.ImageFragment;
-import dev_pc.testunsplashapi.recycler_view.image_recycler.MyImageRecyclerViewAdapter;
+import dev_pc.testunsplashapi.recycler_view.image_recycler.ImageRecyclerViewAdapter;
 import dev_pc.testunsplashapi.model.Photo;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -30,24 +31,14 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class NewPhotoFragment extends AbstractTabFragment implements
-        ImageFragment.OnListFragmentInteractionListener{
+public class NewPhotoFragment extends BaseFragment implements IListFragment.Presenter{
 
     private final int LAYOUT = R.layout.fragment_new_foto;
     Photo unsplashModel;
-    List<Photo> lists;
-    RecyclerView recyclerView;
     OkHttpClient myOkHttpClient;
     String CLIENT_ID = "0309ebb085124bab57ce37c0cb6b9ea1b4f9a3c90208a5739b07f625fe63c87b";
 
-    public static NewPhotoFragment getInstance(Context context) {
-        Bundle args = new Bundle();
-        NewPhotoFragment fragment = new NewPhotoFragment();
-        fragment.setArguments(args);
-        fragment.setContext(context);
-        fragment.setTitle(context.getString(R.string.new_tab_name));
-        return fragment;
-    }
+
 
     @Override
     public void onStart() {
@@ -58,10 +49,10 @@ public class NewPhotoFragment extends AbstractTabFragment implements
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public android.view.View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                                          Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false);
         return view;
-
     }
 
     private void getPublic(){
@@ -71,7 +62,7 @@ public class NewPhotoFragment extends AbstractTabFragment implements
         recyclerView = view.findViewById(R.id.reclist);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        MyImageRecyclerViewAdapter adapter = new MyImageRecyclerViewAdapter(lists,this);
+        ImageRecyclerViewAdapter adapter = new ImageRecyclerViewAdapter(lists, listener);
         recyclerView.setAdapter(adapter);
 
         Retrofit.Builder builder = new Retrofit.Builder()
@@ -109,9 +100,34 @@ public class NewPhotoFragment extends AbstractTabFragment implements
         myOkHttpClient = builder.build();
     }
 
+
+
     @Override
-    public void onListFragmentInteraction(Photo item) {
-        Toast.makeText(getActivity(), "you touch item of recyclerView?", Toast.LENGTH_LONG).show();
+    public BaseFragmentPresenter createPresenter() {
+        return new BaseFragmentPresenter();
     }
 
+    @Override
+    public void initRecycler(IListFragment.View View, int recID) {
+        lists = new ArrayList<>();
+        recyclerView = view.findViewById(recID);
+        imageRecyclerViewAdapter = new ImageRecyclerViewAdapter(lists, listener);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+    }
+
+    @Override
+    public void onDowload(Photo photo) {
+        getPresenter().onDownload(photo);
+    }
+
+    @Override
+    public void onLike(Photo photo) {
+        getPresenter().onLike(photo);
+    }
+
+    @Override
+    public void onCollection(Photo photo) {
+        getPresenter().onDownload(photo);
+    }
 }
