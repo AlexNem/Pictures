@@ -3,19 +3,130 @@ package dev_pc.testunsplashapi.activity.user_activity.user_fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import dev_pc.testunsplashapi.Fragment.IListFragment;
 import dev_pc.testunsplashapi.R;
+import dev_pc.testunsplashapi.authentication.Authentication;
+import dev_pc.testunsplashapi.authentication.MySharedPreferences;
+import dev_pc.testunsplashapi.authentication.OkhttpClient;
+import dev_pc.testunsplashapi.authentication.ServiceRetrofit;
+import dev_pc.testunsplashapi.model.Photo;
+import dev_pc.testunsplashapi.recycler_view.image_recycler.ImageRecyclerViewAdapter;
+import dev_pc.testunsplashapi.service.ApiUnsplash;
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LikesFragment extends Fragment {
 
+    private MySharedPreferences mySharedPreferences;
+    private ServiceRetrofit serviceRetrofit;
+    private Authentication authentication;
+    private OkhttpClient myClient;
+
+    private android.view.View view;
+    private RecyclerView recyclerView;
+    private IListFragment.Presenter listener;
+    private final int LAYOUT = R.layout.fragment_new_foto;
+
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getPublic();
+    }
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frgment_profile, container, false);
+    public android.view.View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                                          Bundle savedInstanceState) {
+        view = inflater.inflate(LAYOUT, container, false);
+
+        mySharedPreferences = new MySharedPreferences(getContext());
+        serviceRetrofit = new ServiceRetrofit();
+        authentication = new Authentication(getContext());
+        myClient = new OkhttpClient(getContext());
+
         return view;
     }
+
+    private void getPublic(){
+
+        List<Photo> lists = new ArrayList<>();
+
+        recyclerView = view.findViewById(R.id.reclist);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        ImageRecyclerViewAdapter adapter = new ImageRecyclerViewAdapter(lists, listener);
+        recyclerView.setAdapter(adapter);
+
+        OkHttpClient client = myClient.publicClient(mySharedPreferences);
+        Retrofit retrofit = serviceRetrofit.getRetrofit(client);
+        ApiUnsplash service = retrofit.create(ApiUnsplash.class);
+        Observable<List<Photo>> getPublicPhoto = service.getPublicPhotos();
+        getPublicPhoto
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(listPublicPhoto -> {
+                    Log.d("TAG", "publicPhotoList " + listPublicPhoto.size());
+                    lists.addAll(listPublicPhoto);
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                        }
+                );
+
+
+//        Retrofit.Builder builder = new Retrofit.Builder()
+//                .baseUrl("https://api.unsplash.com/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .client(myOkHttpClient);
+//        Retrofit retrofit = builder.build();
+//        ApiUnsplash client = retrofit.create(ApiUnsplash.class);
+//
+//        Observable<List<Photo>> getPublic = client.getPublicPhotos();
+//        getPublic
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(list ->{
+//                            Log.d("TAG", "list" + list.size());
+//                            lists.addAll(list);
+//                            recyclerView.getAdapter().notifyDataSetChanged();
+//                        }
+//                );
+    }
+
+//    private void publicClient(){
+//        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+//        builder.addInterceptor(new Interceptor() {
+//            @Override
+//            public okhttp3.Response intercept(Chain chain) throws IOException {
+//                Request request = chain.request();
+//                Request.Builder requestBuilder = request.newBuilder()
+//                        .header("Authorization","Client-ID " + CLIENT_ID);
+//                Request newRequest = requestBuilder.build();
+//                return chain.proceed(newRequest);
+//            }
+//        });
+//        myOkHttpClient = builder.build();
+//    }
+
 
 }

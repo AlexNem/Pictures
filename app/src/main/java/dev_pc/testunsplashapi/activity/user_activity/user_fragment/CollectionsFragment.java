@@ -7,7 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hannesdorfmann.mosby3.mvp.MvpFragment;
+
 import dev_pc.testunsplashapi.R;
+import dev_pc.testunsplashapi.activity.user_activity.IUser;
+import dev_pc.testunsplashapi.activity.user_activity.UserPresenter;
 
 public class CollectionsFragment extends Fragment {
 
@@ -17,4 +21,5 @@ public class CollectionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.frgment_profile, container, false);
         return view;
     }
+
 }

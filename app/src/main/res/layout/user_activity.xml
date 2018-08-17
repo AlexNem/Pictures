@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/profile_list">
 
     <ImageView
         android:id="@+id/user_profile_image"
@@ -28,23 +29,26 @@
         <Button
             android:text="photo"
             android:layout_weight="1"
-        android:id="@+id/btn_user_photo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            android:id="@+id/btn_user_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="onClick"/>
 
         <Button
             android:text="likes"
             android:layout_weight="1"
             android:id="@+id/btn_user_likes"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:onClick="onClick"/>
 
         <Button
             android:layout_weight="1"
             android:text="collections"
             android:id="@+id/btn_user_collections"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:onClick="onClick"/>
 
     </LinearLayout>
 
