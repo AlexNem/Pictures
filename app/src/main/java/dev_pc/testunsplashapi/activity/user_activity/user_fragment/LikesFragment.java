@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,15 +22,10 @@ import dev_pc.testunsplashapi.model.Photo;
 import dev_pc.testunsplashapi.recycler_view.image_recycler.ImageRecyclerViewAdapter;
 import dev_pc.testunsplashapi.service.ApiUnsplash;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LikesFragment extends Fragment {
 
@@ -42,6 +36,7 @@ public class LikesFragment extends Fragment {
 
     private android.view.View view;
     private RecyclerView recyclerView;
+    private List<Photo> lists;
     private IListFragment.Presenter listener;
     private final int LAYOUT = R.layout.fragment_new_foto;
 
@@ -51,6 +46,7 @@ public class LikesFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        initRecycler();
         getPublic();
     }
 
@@ -64,20 +60,20 @@ public class LikesFragment extends Fragment {
         serviceRetrofit = new ServiceRetrofit();
         authentication = new Authentication(getContext());
         myClient = new OkhttpClient(getContext());
+        lists = new ArrayList<>();
 
         return view;
     }
 
-    private void getPublic(){
-
-        List<Photo> lists = new ArrayList<>();
-
+    private void initRecycler(){
         recyclerView = view.findViewById(R.id.reclist);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         ImageRecyclerViewAdapter adapter = new ImageRecyclerViewAdapter(lists, listener);
         recyclerView.setAdapter(adapter);
+    }
 
+    private void getPublic() {
         OkHttpClient client = myClient.publicClient(mySharedPreferences);
         Retrofit retrofit = serviceRetrofit.getRetrofit(client);
         ApiUnsplash service = retrofit.create(ApiUnsplash.class);
@@ -91,6 +87,7 @@ public class LikesFragment extends Fragment {
                     recyclerView.getAdapter().notifyDataSetChanged();
                         }
                 );
+    }
 
 
 //        Retrofit.Builder builder = new Retrofit.Builder()
@@ -111,7 +108,7 @@ public class LikesFragment extends Fragment {
 //                            recyclerView.getAdapter().notifyDataSetChanged();
 //                        }
 //                );
-    }
+
 
 //    private void publicClient(){
 //        OkHttpClient.Builder builder = new OkHttpClient.Builder();

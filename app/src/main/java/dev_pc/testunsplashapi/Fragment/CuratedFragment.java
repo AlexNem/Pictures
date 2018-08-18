@@ -29,12 +29,4 @@ public class CuratedFragment extends BaseFragment {
         return view;
     }
 
-    @Override
-    public void initRecycler(IListFragment.View View, int recID) {
-        lists = new ArrayList<>();
-        recyclerView = view.findViewById(recID);
-        imageRecyclerViewAdapter = new ImageRecyclerViewAdapter(lists, listener);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-    }
 }

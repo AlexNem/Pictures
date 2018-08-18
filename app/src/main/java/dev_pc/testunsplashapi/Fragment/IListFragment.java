@@ -7,7 +7,7 @@ import dev_pc.testunsplashapi.model.Photo;
 public interface IListFragment {
 
     interface View extends MvpView{
-        void initRecycler(View View, int recID);
+        void initRecycler( int recID);
     }
     interface Presenter{
         void onDowload(Photo photo);
