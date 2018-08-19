@@ -40,9 +40,6 @@ public class LikesFragment extends Fragment {
     private IListFragment.Presenter listener;
     private final int LAYOUT = R.layout.fragment_new_foto;
 
-
-
-
     @Override
     public void onStart() {
         super.onStart();

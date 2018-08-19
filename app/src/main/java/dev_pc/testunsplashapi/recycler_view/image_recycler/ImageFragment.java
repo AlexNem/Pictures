@@ -17,7 +17,7 @@ import dev_pc.testunsplashapi.model.Photo;
 
 public class ImageFragment extends Fragment {
 
-    Photo unsplashModel;
+    Photo photo;
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
@@ -38,7 +38,7 @@ public class ImageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        unsplashModel = new Photo();
+        photo = new Photo();
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
@@ -59,7 +59,7 @@ public class ImageFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(new ImageRecyclerViewAdapter(
-                    unsplashModel.getCurrentUserCollections(), mListener));
+                    photo.getCurrentUserCollections(), mListener));
         }
         return view;
     }
@@ -71,7 +71,7 @@ public class ImageFragment extends Fragment {
             mListener = (IListFragment.Presenter) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement IPresenter");
         }
     }
 

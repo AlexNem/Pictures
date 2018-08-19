@@ -50,8 +50,6 @@ public class NewPhotoFragment extends Fragment{
     private final int LAYOUT = R.layout.fragment_new_foto;
 
 
-
-
     @Override
     public void onStart() {
         super.onStart();
@@ -97,5 +95,5 @@ public class NewPhotoFragment extends Fragment{
                         }
                 );
     }
-    
+
 }
