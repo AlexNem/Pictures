@@ -59,33 +59,27 @@ public class LoginActivity extends MvpActivity<IView, LoginPresenter>
     }
 
     void showStartActivity(){
-        btn_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(startActivity);
-            }
+        btn_start.setOnClickListener(listener->{
+            startActivity(startActivity);
         });
     }
 
     void showSP(){
-        btn_show.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!tokenSP.equals("")) {
-                    Toast.makeText(getApplicationContext(), "tokenSP " + sharedPreferences.getMyAccessToken().getAccessToken(), Toast.LENGTH_LONG).show();
-                } else Toast.makeText(getApplicationContext(), "Немає токена!\nАвторизуйтесь!", Toast.LENGTH_SHORT).show();
-            }
+        btn_show.setOnClickListener(listener->{
+            if (!tokenSP.equals("")) {
+                Toast.makeText(getApplicationContext(), "tokenSP "
+                        + sharedPreferences.getMyAccessToken().getAccessToken(), Toast.LENGTH_LONG).show();
+            } else Toast.makeText(getApplicationContext(), "Немає токена!\nАвторизуйтесь!",
+                    Toast.LENGTH_SHORT).show();
         });
     }
 
     void btnUser(){
-        btn_user.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!tokenSP.equals("")) {
-                    getPresenter().getCurrentUser();
-                }else Toast.makeText(getApplicationContext(), "Немає токена!\nАвторизуйтесь!", Toast.LENGTH_SHORT).show();
-            }
+        btn_user.setOnClickListener(listener->{
+            if (!tokenSP.equals("")) {
+                getPresenter().getCurrentUser();
+            }else Toast.makeText(getApplicationContext(), "Немає токена!\nАвторизуйтесь!",
+                    Toast.LENGTH_SHORT).show();
         });
     }
     
@@ -105,11 +99,8 @@ public class LoginActivity extends MvpActivity<IView, LoginPresenter>
 
     @Override
     public void pressAuthorize() {
-        btn_token.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getPresenter().authorize();
-            }
+        btn_token.setOnClickListener(listener->{
+            getPresenter().authorize();
         });
 
     }
