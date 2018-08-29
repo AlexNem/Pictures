@@ -10,7 +10,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-
+import retrofit2.http.Query;
 
 
 public interface ApiUnsplash {
@@ -32,10 +32,15 @@ public interface ApiUnsplash {
     Observable<User> getUserProfile();
 
     @GET("photos/curated")
-    Observable<List<Photo>> getNewPhoto(
+    Observable<List<Photo>> getCurated(
 //            @Field("page") int page,
 //            @Field("per_page") int per_page,
 //            @Field("order_by") String order
+    );
+
+    @GET("user/:username")
+    Observable<User> getPublicUserProfile(
+      @Query("username") String username
     );
 
 }

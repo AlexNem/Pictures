@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -77,7 +76,7 @@ public class CuratedFragment extends Fragment {
         OkHttpClient client = myClient.publicClient(mySharedPreferences);
         Retrofit retrofit = serviceRetrofit.getRetrofit(client);
         ApiUnsplash service = retrofit.create(ApiUnsplash.class);
-        Observable<List<Photo>> getPublicPhoto = service.getNewPhoto();
+        Observable<List<Photo>> getPublicPhoto = service.getCurated();
         getPublicPhoto
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

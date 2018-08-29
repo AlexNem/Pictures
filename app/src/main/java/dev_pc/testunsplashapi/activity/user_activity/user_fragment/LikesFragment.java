@@ -31,7 +31,6 @@ public class LikesFragment extends Fragment {
 
     private MySharedPreferences mySharedPreferences;
     private ServiceRetrofit serviceRetrofit;
-    private Authentication authentication;
     private OkhttpClient myClient;
 
     private android.view.View view;
@@ -55,7 +54,6 @@ public class LikesFragment extends Fragment {
 
         mySharedPreferences = new MySharedPreferences(getContext());
         serviceRetrofit = new ServiceRetrofit();
-        authentication = new Authentication(getContext());
         myClient = new OkhttpClient(getContext());
         lists = new ArrayList<>();
 
