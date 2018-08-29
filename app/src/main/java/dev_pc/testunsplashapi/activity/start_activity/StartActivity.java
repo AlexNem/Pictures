@@ -1,5 +1,6 @@
 package dev_pc.testunsplashapi.activity.start_activity;
 
+import android.app.ActionBar;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import dev_pc.testunsplashapi.Fragment.NewPhotoFragment;
@@ -36,7 +38,12 @@ public class StartActivity extends AppCompatActivity {
             }
         });
         toolbar.inflateMenu(R.menu.menu);
+       toolbar.setNavigationIcon(R.drawable.ic_back_white24dp);
+       toolbar.setNavigationOnClickListener(listener->{
+           onBackPressed();
+       });
     }
+
 
     private void addFragment(){
         NewPhotoFragment newPhotoFragment = new NewPhotoFragment();

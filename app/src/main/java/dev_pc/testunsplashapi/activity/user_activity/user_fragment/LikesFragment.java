@@ -14,7 +14,6 @@ import java.util.List;
 
 import dev_pc.testunsplashapi.Fragment.IListFragment;
 import dev_pc.testunsplashapi.R;
-import dev_pc.testunsplashapi.authentication.Authentication;
 import dev_pc.testunsplashapi.authentication.MySharedPreferences;
 import dev_pc.testunsplashapi.authentication.OkhttpClient;
 import dev_pc.testunsplashapi.authentication.ServiceRetrofit;

@@ -34,7 +34,7 @@ public class CollectionsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPublicUserProfile();
+//        getPublicUserProfile();
     }
 
     @Nullable
@@ -43,20 +43,12 @@ public class CollectionsFragment extends Fragment {
         view = inflater.inflate(R.layout.frgment_profile, container, false);
 
         mySharedPreferences = new MySharedPreferences(getContext());
-        Log.d("TAG", "initSP " + mySharedPreferences.equals(null));
         serviceRetrofit = new ServiceRetrofit();
         myClient = new OkhttpClient(getContext());
-        Log.d("TAG", "init Client " + myClient.equals(null));
-
         return view;
     }
 
     private void getPublicUserProfile(){
-        if (myClient.equals(null)){
-            Log.d("TAG", "client = null!");
-        }if (mySharedPreferences.equals(null)){
-            Log.d("TAG", "SP = null!");
-        }else {
             OkHttpClient client = myClient.tokenClient(mySharedPreferences);
             Log.d("TAG", "client " + client.equals(null));
             Retrofit retrofit = serviceRetrofit.getRetrofit(client);
@@ -70,9 +62,6 @@ public class CollectionsFragment extends Fragment {
                                 Log.d("TAG", "resultUserProfile" + user.getUsername().toString());
                             }
                     );
-        }
-
-
     }
 
 }
