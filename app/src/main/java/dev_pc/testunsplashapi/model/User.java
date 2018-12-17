@@ -15,12 +15,18 @@ public class User {
     @SerializedName("username")
     @Expose
     private String username;
+    @SerializedName("name")
+    @Expose
+    private String name;
     @SerializedName("first_name")
     @Expose
     private String firstName;
     @SerializedName("last_name")
     @Expose
     private String lastName;
+    @SerializedName("instagram_username")
+    @Expose
+    private String instagramUsername;
     @SerializedName("twitter_username")
     @Expose
     private String twitterUsername;
@@ -32,31 +38,34 @@ public class User {
     private String bio;
     @SerializedName("location")
     @Expose
-    private Object location;
+    private String location;
     @SerializedName("total_likes")
     @Expose
-    private long totalLikes;
+    private Integer totalLikes;
     @SerializedName("total_photos")
     @Expose
-    private long totalPhotos;
+    private Integer totalPhotos;
     @SerializedName("total_collections")
     @Expose
-    private long totalCollections;
+    private Integer totalCollections;
     @SerializedName("followed_by_user")
     @Expose
-    private boolean followedByUser;
+    private Boolean followedByUser;
+    @SerializedName("followers_count")
+    @Expose
+    private Integer followersCount;
+    @SerializedName("following_count")
+    @Expose
+    private Integer followingCount;
     @SerializedName("downloads")
     @Expose
-    private long downloads;
-    @SerializedName("uploads_remaining")
+    private Integer downloads;
+    @SerializedName("profile_image")
     @Expose
-    private long uploadsRemaining;
-    @SerializedName("instagram_username")
+    private ProfileImage profileImage;
+    @SerializedName("badge")
     @Expose
-    private String instagramUsername;
-    @SerializedName("email")
-    @Expose
-    private String email;
+    private Badge badge;
     @SerializedName("links")
     @Expose
     private Links links;
@@ -85,6 +94,14 @@ public class User {
         this.username = username;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -99,6 +116,14 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getInstagramUsername() {
+        return instagramUsername;
+    }
+
+    public void setInstagramUsername(String instagramUsername) {
+        this.instagramUsername = instagramUsername;
     }
 
     public String getTwitterUsername() {
@@ -125,76 +150,84 @@ public class User {
         this.bio = bio;
     }
 
-    public Object getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Object location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
-    public long getTotalLikes() {
+    public Integer getTotalLikes() {
         return totalLikes;
     }
 
-    public void setTotalLikes(long totalLikes) {
+    public void setTotalLikes(Integer totalLikes) {
         this.totalLikes = totalLikes;
     }
 
-    public long getTotalPhotos() {
+    public Integer getTotalPhotos() {
         return totalPhotos;
     }
 
-    public void setTotalPhotos(long totalPhotos) {
+    public void setTotalPhotos(Integer totalPhotos) {
         this.totalPhotos = totalPhotos;
     }
 
-    public long getTotalCollections() {
+    public Integer getTotalCollections() {
         return totalCollections;
     }
 
-    public void setTotalCollections(long totalCollections) {
+    public void setTotalCollections(Integer totalCollections) {
         this.totalCollections = totalCollections;
     }
 
-    public boolean isFollowedByUser() {
+    public Boolean getFollowedByUser() {
         return followedByUser;
     }
 
-    public void setFollowedByUser(boolean followedByUser) {
+    public void setFollowedByUser(Boolean followedByUser) {
         this.followedByUser = followedByUser;
     }
 
-    public long getDownloads() {
+    public Integer getFollowersCount() {
+        return followersCount;
+    }
+
+    public void setFollowersCount(Integer followersCount) {
+        this.followersCount = followersCount;
+    }
+
+    public Integer getFollowingCount() {
+        return followingCount;
+    }
+
+    public void setFollowingCount(Integer followingCount) {
+        this.followingCount = followingCount;
+    }
+
+    public Integer getDownloads() {
         return downloads;
     }
 
-    public void setDownloads(long downloads) {
+    public void setDownloads(Integer downloads) {
         this.downloads = downloads;
     }
 
-    public long getUploadsRemaining() {
-        return uploadsRemaining;
+    public ProfileImage getProfileImage() {
+        return profileImage;
     }
 
-    public void setUploadsRemaining(long uploadsRemaining) {
-        this.uploadsRemaining = uploadsRemaining;
+    public void setProfileImage(ProfileImage profileImage) {
+        this.profileImage = profileImage;
     }
 
-    public String getInstagramUsername() {
-        return instagramUsername;
+    public Badge getBadge() {
+        return badge;
     }
 
-    public void setInstagramUsername(String instagramUsername) {
-        this.instagramUsername = instagramUsername;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setBadge(Badge badge) {
+        this.badge = badge;
     }
 
     public Links getLinks() {

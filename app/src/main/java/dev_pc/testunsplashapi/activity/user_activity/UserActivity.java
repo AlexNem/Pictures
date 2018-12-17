@@ -6,7 +6,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -35,6 +34,11 @@ public class UserActivity extends AppCompatActivity implements
     private CircleImageView userImage;
 
     @Override
+    public void photosClick(Intent intent) {
+        startActivity(intent);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
@@ -45,6 +49,12 @@ public class UserActivity extends AppCompatActivity implements
         setUserImage();
         setBtnFollow();
 
+        initPresenter();
+
+    }
+
+    private UserPresenter initPresenter(){
+        return new UserPresenter(this, mySharedPreferences, serviceRetrofit, myClient);
     }
 
     private void initResources(){
@@ -72,20 +82,19 @@ public class UserActivity extends AppCompatActivity implements
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }
-
     private void setUserImage(){
+        UserPresenter userPresenter = initPresenter();
+        userPresenter.getCurrentUser();
     Picasso.with(this)
+//            .load(userPresenter.getUserImageUrl())
             .load("http://i.imgur.com/DvpvklR.png")
             .error(R.drawable.ic_favorite_red_24dp)
             .into(userImage);
-}
+
+    }
+
     public void setBtnFollow(){
         btnFollow.setOnClickListener(listener->
             Toast.makeText(this, "Follow!", Toast.LENGTH_SHORT).show());
-    }
-
-    @Override
-    public void photosClick(Intent intent) {
-        startActivity(intent);
     }
 }

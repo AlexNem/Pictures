@@ -47,7 +47,17 @@ public class LoginPresenter extends MvpBasePresenter<IView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(user -> {
-                            Log.d("TAG", "user" + user.getUsername());
+                            Log.d("TAG",
+                                    "user " + user.getUsername() +
+                                            user.getPortfolioUrl() +
+                                            user.getBio() +
+                                            user.getFirstName() +
+                                            user.getId() +
+                                            user.getInstagramUsername() +
+                                            user.getLastName() +
+                                            user.getTwitterUsername() +
+                                            user.getLinks()
+                            );
                     Toast.makeText(context, " " + user.getUsername(), Toast.LENGTH_LONG).show();
                         }
                 );
