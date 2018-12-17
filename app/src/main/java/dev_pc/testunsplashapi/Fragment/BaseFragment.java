@@ -1,22 +1,13 @@
 package dev_pc.testunsplashapi.Fragment;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.hannesdorfmann.mosby3.mvp.MvpFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import dev_pc.testunsplashapi.R;
-import dev_pc.testunsplashapi.authentication.Authentication;
+import dev_pc.testunsplashapi.authentication.AuthenticationManager;
 import dev_pc.testunsplashapi.authentication.MySharedPreferences;
 import dev_pc.testunsplashapi.authentication.OkhttpClient;
 import dev_pc.testunsplashapi.authentication.ServiceRetrofit;
@@ -27,7 +18,7 @@ public abstract class BaseFragment extends MvpFragment<IListFragment.View, BaseF
 
     protected MySharedPreferences mySharedPreferences;
     protected ServiceRetrofit serviceRetrofit;
-    protected Authentication authentication;
+    protected AuthenticationManager authenticationManager;
     protected OkhttpClient myClient;
 
     protected android.view.View view;
@@ -46,7 +37,7 @@ public abstract class BaseFragment extends MvpFragment<IListFragment.View, BaseF
     private void initResource(){
         mySharedPreferences = new MySharedPreferences(getContext());
         serviceRetrofit = new ServiceRetrofit();
-        authentication = new Authentication(getContext());
+        authenticationManager = new AuthenticationManager(getContext());
         myClient = new OkhttpClient(getContext());
     }
 

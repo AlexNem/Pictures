@@ -6,6 +6,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class User {
 
+    public User(ProfileImage profileImage) {
+        this.profileImage = profileImage;
+    }
+
     @SerializedName("id")
     @Expose
     private String id;

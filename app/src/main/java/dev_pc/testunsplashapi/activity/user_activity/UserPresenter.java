@@ -1,15 +1,14 @@
 package dev_pc.testunsplashapi.activity.user_activity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import dev_pc.testunsplashapi.authentication.MySharedPreferences;
 import dev_pc.testunsplashapi.authentication.OkhttpClient;
 import dev_pc.testunsplashapi.authentication.ServiceRetrofit;
-import dev_pc.testunsplashapi.model.Links;
 import dev_pc.testunsplashapi.model.User;
 import dev_pc.testunsplashapi.service.ApiUnsplash;
 import io.reactivex.Observable;
@@ -25,6 +24,7 @@ public class UserPresenter extends MvpBasePresenter<IUser.View> {
     private ServiceRetrofit serviceRetrofit;
     private OkhttpClient myClient;
     private String userImageUrl;
+    SharedPreferences sharedPreferences;
 
     public UserPresenter(Context context, MySharedPreferences mySharedPreferences,
                          ServiceRetrofit serviceRetrofit, OkhttpClient myClient){
@@ -32,6 +32,7 @@ public class UserPresenter extends MvpBasePresenter<IUser.View> {
         this.mySharedPreferences = new MySharedPreferences(context);
         this.serviceRetrofit = new ServiceRetrofit();
         this.myClient = new OkhttpClient(context);
+        sharedPreferences = context.getSharedPreferences("userImageUrl", Context.MODE_PRIVATE);
     }
 
     public void getCurrentUser(){
@@ -43,7 +44,11 @@ public class UserPresenter extends MvpBasePresenter<IUser.View> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(user -> {
-                    userImageUrl = user.getLinks().getSelf();
+                    Observable<User> publicUser = Observable.just(new User(user.getProfileImage()));
+                    Log.d("user Rx ", "\n" + "observable " + publicUser);
+                    SharedPreferences.Editor editor = sharedPreferences.edit()
+                            .putString("userImageUrl", user.getProfileImage().getLarge());
+                    editor.apply();
                     Log.d("user", "\n" + "url " + userImageUrl);
                             Log.d("user",
                                     "user " + user.getUsername() +
@@ -65,8 +70,13 @@ public class UserPresenter extends MvpBasePresenter<IUser.View> {
     }
 
     public String getUserImageUrl(){
-        return userImageUrl;
-
+        String imageUrl = sharedPreferences.getString("userImageUrl", "");
+        if(imageUrl.isEmpty()){
+            imageUrl = "null";
+        }else {
+            imageUrl = sharedPreferences.getString("userImageUrl", "");
+        }
+        return imageUrl;
     }
 
 

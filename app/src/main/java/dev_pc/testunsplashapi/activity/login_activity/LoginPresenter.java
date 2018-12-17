@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
-import dev_pc.testunsplashapi.authentication.Authentication;
+import dev_pc.testunsplashapi.authentication.AuthenticationManager;
 import dev_pc.testunsplashapi.authentication.MySharedPreferences;
 import dev_pc.testunsplashapi.authentication.OkhttpClient;
 import dev_pc.testunsplashapi.authentication.ServiceRetrofit;
@@ -26,7 +26,7 @@ public class LoginPresenter extends MvpBasePresenter<IView> {
     private MySharedPreferences mySharedPreferences;
     private Context context;
     private ServiceRetrofit serviceRetrofit;
-    private Authentication authentication;
+    private AuthenticationManager authenticationManager;
     private OkhttpClient myClient;
 
 
@@ -34,7 +34,7 @@ public class LoginPresenter extends MvpBasePresenter<IView> {
         this.context = context;
         mySharedPreferences = new MySharedPreferences(context);
         serviceRetrofit = new ServiceRetrofit();
-        authentication = new Authentication(context);
+        authenticationManager = new AuthenticationManager(context);
         myClient = new OkhttpClient(context);
     }
 
@@ -64,7 +64,7 @@ public class LoginPresenter extends MvpBasePresenter<IView> {
     }
 
     public void authorize(){
-        authentication.getUri();
+        authenticationManager.getUri();
     }
 
     public void getToken(Uri uri) {
@@ -72,7 +72,7 @@ public class LoginPresenter extends MvpBasePresenter<IView> {
             String code;
             code = uri.getQueryParameter("code");
             Log.d("TAG", "code " + code);
-           authentication.getToken(code);
+           authenticationManager.getToken(code);
         }
     }
 

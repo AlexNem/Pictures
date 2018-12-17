@@ -1,25 +1,19 @@
 package dev_pc.testunsplashapi.Fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.hannesdorfmann.mosby3.mvp.MvpView;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import dev_pc.testunsplashapi.R;
-import dev_pc.testunsplashapi.authentication.Authentication;
+import dev_pc.testunsplashapi.authentication.AuthenticationManager;
 import dev_pc.testunsplashapi.authentication.MySharedPreferences;
 import dev_pc.testunsplashapi.authentication.OkhttpClient;
 import dev_pc.testunsplashapi.authentication.ServiceRetrofit;
@@ -29,18 +23,14 @@ import dev_pc.testunsplashapi.model.Photo;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NewPhotoFragment extends Fragment{
 
     private MySharedPreferences mySharedPreferences;
     private ServiceRetrofit serviceRetrofit;
-    private Authentication authentication;
+    private AuthenticationManager authenticationManager;
     private OkhttpClient myClient;
 
     private android.view.View view;
@@ -65,7 +55,7 @@ public class NewPhotoFragment extends Fragment{
 
         mySharedPreferences = new MySharedPreferences(getContext());
         serviceRetrofit = new ServiceRetrofit();
-        authentication = new Authentication(getContext());
+        authenticationManager = new AuthenticationManager(getContext());
         myClient = new OkhttpClient(getContext());
         lists = new ArrayList<>();
 

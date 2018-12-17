@@ -32,6 +32,7 @@ public class UserActivity extends AppCompatActivity implements
     private OkhttpClient myClient;
 
     private CircleImageView userImage;
+    private UserPresenter userPresenter;
 
     @Override
     public void photosClick(Intent intent) {
@@ -44,20 +45,24 @@ public class UserActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_user);
 
         initResources();
+        initPresenter();
         initToolbar();
         initViewPager();
         setUserImage();
         setBtnFollow();
 
-        initPresenter();
+
 
     }
 
     private UserPresenter initPresenter(){
-        return new UserPresenter(this, mySharedPreferences, serviceRetrofit, myClient);
+        userPresenter = new UserPresenter(this, mySharedPreferences, serviceRetrofit, myClient);
+        userPresenter.getCurrentUser();
+        return userPresenter;
     }
 
     private void initResources(){
+
         btnFollow = findViewById(R.id.btn_follow);
         mySharedPreferences = new MySharedPreferences(this);
         serviceRetrofit = new ServiceRetrofit();
@@ -83,12 +88,9 @@ public class UserActivity extends AppCompatActivity implements
         tabLayout.setupWithViewPager(viewPager);
     }
     private void setUserImage(){
-        UserPresenter userPresenter = initPresenter();
-        userPresenter.getCurrentUser();
     Picasso.with(this)
-//            .load(userPresenter.getUserImageUrl())
-            .load("http://i.imgur.com/DvpvklR.png")
-            .error(R.drawable.ic_favorite_red_24dp)
+            .load(userPresenter.getUserImageUrl())
+            .placeholder(R.drawable.ic_favorite_red_24dp)
             .into(userImage);
 
     }

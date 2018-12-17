@@ -13,13 +13,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class Authentication {
+public class AuthenticationManager {
 
     private Context context;
     private MySharedPreferences sharedPreferences;
     private ServiceRetrofit serviceRetrofit;
 
-    public Authentication(Context context) {
+    public AuthenticationManager(Context context) {
         this.context = context;
         serviceRetrofit = new ServiceRetrofit();
         sharedPreferences = new MySharedPreferences(context);

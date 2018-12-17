@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev_pc.testunsplashapi.R;
-import dev_pc.testunsplashapi.authentication.Authentication;
+import dev_pc.testunsplashapi.authentication.AuthenticationManager;
 import dev_pc.testunsplashapi.authentication.MySharedPreferences;
 import dev_pc.testunsplashapi.authentication.OkhttpClient;
 import dev_pc.testunsplashapi.authentication.ServiceRetrofit;
@@ -33,7 +33,7 @@ public class CuratedFragment extends Fragment {
 
     private MySharedPreferences mySharedPreferences;
     private ServiceRetrofit serviceRetrofit;
-    private Authentication authentication;
+    private AuthenticationManager authenticationManager;
     private OkhttpClient myClient;
 
     private android.view.View view;
@@ -57,7 +57,7 @@ public class CuratedFragment extends Fragment {
 
         mySharedPreferences = new MySharedPreferences(getContext());
         serviceRetrofit = new ServiceRetrofit();
-        authentication = new Authentication(getContext());
+        authenticationManager = new AuthenticationManager(getContext());
         myClient = new OkhttpClient(getContext());
         lists = new ArrayList<>();
 
