@@ -1,35 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/home"
         android:icon="@drawable/search_24dp"
         android:orderInCategory="1"
-        android:title="@string/home_title"
-         />
+        android:title="@string/home_title" />
     <item
         android:id="@+id/collection"
         android:icon="@drawable/search_24dp"
         android:orderInCategory="1"
-        android:title="@string/collection_title"
-         />
+        android:title="@string/collection_title" />
     <item
         android:id="@+id/category"
         android:icon="@drawable/search_24dp"
         android:orderInCategory="1"
-        android:title="@string/category_title"
-         />
+        android:title="@string/category_title" />
     <item
         android:id="@+id/theme"
         android:icon="@drawable/search_24dp"
         android:orderInCategory="1"
-        android:title="@string/theme_title"
-         />
+        android:title="@string/theme_title" />
     <item
         android:id="@+id/about"
         android:icon="@drawable/search_24dp"
         android:orderInCategory="1"
-        android:title="@string/about_title"
-         />
+        android:title="@string/about_title" />
 </menu>

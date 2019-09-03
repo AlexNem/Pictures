@@ -6,10 +6,9 @@
 
     <TextView
         android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:text="asfafafafa"
-        android:textSize="50dp"
-        android:layout_gravity="center"/>
-    <include layout="@layout/fragment_image"/>
+        android:layout_height="100dp"
+        android:layout_gravity="center" />
+
+    <include layout="@layout/fragment_image" />
 
 </LinearLayout>

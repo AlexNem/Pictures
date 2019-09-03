@@ -1,7 +1,7 @@
 package dev_pc.testunsplashapi.Fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hannesdorfmann.mosby3.mvp.MvpFragment;
 

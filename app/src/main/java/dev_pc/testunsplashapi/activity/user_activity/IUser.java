@@ -1,6 +1,6 @@
 package dev_pc.testunsplashapi.activity.user_activity;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.hannesdorfmann.mosby3.mvp.MvpView;
 

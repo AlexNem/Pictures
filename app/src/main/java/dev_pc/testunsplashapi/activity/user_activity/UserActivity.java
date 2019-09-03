@@ -2,14 +2,15 @@ package dev_pc.testunsplashapi.activity.user_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+
+import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import dev_pc.testunsplashapi.R;
@@ -50,9 +51,6 @@ public class UserActivity extends AppCompatActivity implements
         initViewPager();
         setUserImage();
         setBtnFollow();
-
-
-
     }
 
     private UserPresenter initPresenter(){
@@ -88,7 +86,7 @@ public class UserActivity extends AppCompatActivity implements
         tabLayout.setupWithViewPager(viewPager);
     }
     private void setUserImage(){
-    Picasso.with(this)
+    Glide.with(this)
             .load(userPresenter.getUserImageUrl())
             .placeholder(R.drawable.ic_favorite_red_24dp)
             .into(userImage);

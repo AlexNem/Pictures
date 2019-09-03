@@ -3,9 +3,10 @@ package dev_pc.testunsplashapi.activity.user_activity.user_fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +17,22 @@ import dev_pc.testunsplashapi.activity.start_activity.StartActivity;
 
 public class PhotosFragment extends Fragment {
 
-    public   interface OnClickFragmentPhotos {
+    public interface OnClickFragmentPhotos {
         void photosClick(Intent intent);
-     }
-    OnClickFragmentPhotos onClickFragmentPhotos;
-     Button btn_follow;
-     Button btn_test;
+    }
+
+    private OnClickFragmentPhotos onClickFragmentPhotos;
+    private Button btn_follow;
+    private Button btn_test;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnClickFragmentPhotos){
+        if (context instanceof OnClickFragmentPhotos) {
             onClickFragmentPhotos = (OnClickFragmentPhotos) context;
-        }else {
+        } else {
             throw new RuntimeException(context.toString()
-               + "must be implemented");
+                    + "must be implemented");
 
         }
     }
@@ -46,8 +48,8 @@ public class PhotosFragment extends Fragment {
         return view;
     }
 
-    public void setBtn_test(){
-        btn_test.setOnClickListener(listener->{
+    public void setBtn_test() {
+        btn_test.setOnClickListener(listener -> {
             Intent startIntent = new Intent(getContext(), StartActivity.class);
             onClickFragmentPhotos.photosClick(startIntent);
         });

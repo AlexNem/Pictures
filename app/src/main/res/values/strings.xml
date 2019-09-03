@@ -26,4 +26,5 @@
     <string name="new_tab_name">New</string>
     <string name="curated_tab_name">Curated</string>
     <string name="btn_follow">Follow</string>
+    <string name="recycler_tv_like_count">like_count</string>
 </resources>
