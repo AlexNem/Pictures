@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import dev_pc.testunsplashapi.Fragment.IListFragment;
+import dev_pc.testunsplashapi.ui.fragment.IListFragment;
 import dev_pc.testunsplashapi.R;
 import dev_pc.testunsplashapi.model.Photo;
 

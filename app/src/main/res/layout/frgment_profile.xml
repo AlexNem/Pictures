@@ -6,6 +6,17 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/btn2_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="next"/>
+    <Button
+        android:id="@+id/btn2_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="back"/>
+
+    <Button
         android:id="@+id/btn_Itest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

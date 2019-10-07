@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import dev_pc.testunsplashapi.Fragment.IListFragment;
+import dev_pc.testunsplashapi.ui.fragment.IListFragment;
 import dev_pc.testunsplashapi.R;
 import dev_pc.testunsplashapi.model.Photo;
 
@@ -41,17 +41,14 @@ public class ImageRecyclerViewAdapter extends RecyclerView.Adapter<ImageRecycler
         context = holder.mImageView.getContext();
         Glide.with(context)
                 .load(holder.mPhoto.getUrls().getRegular())
-                .placeholder(R.drawable.ic_photo_size_select_actual_black_24dp)
                 .into(holder.mImageView);
         holder.mLikeCount.setText(holder.mPhoto.getLikes());
         if (holder.mPhoto.isLikedByUser()){
             Glide.with(context)
                     .load(R.drawable.ic_favorite_red_24dp)
-                    .placeholder(R.drawable.ic_favorite_red_24dp)
                     .into(holder.mLike);
         }else Glide.with(context)
-                .load(R.drawable.ic_favorite_black_24dp)
-                .placeholder(R.drawable.ic_faworite_empty)
+                .load(R.drawable.ic_faworite_empty)
                 .into(holder.mLike);
         holder.mLike.setOnClickListener(v -> mListener.onLike(holder.mPhoto));
 
